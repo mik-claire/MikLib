@@ -120,5 +120,37 @@ namespace MikLib.Util
                 fi.Delete();
             }
         }
+
+        /// <summary>
+        /// Returns a new string in which all occurrences of a specified string in the current instance are replaced with another specified string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="before">The string to be replaced.</param>
+        /// <param name="after">The string to replace all occurrences of oldValue.</param>
+        /// <param name="count">The max count to replace.</param>
+        /// <returns>A string that is equivalent to the current string except that all instances of oldValue are replaced with newValue. If oldValue is not found in the current instance, the method returns the current instance unchanged.</returns>
+        public static string Replace(this string str, string before, string after, int count)
+        {
+            if (count < 1)
+            {
+                return str;
+            }
+
+            int startIndex = 0;
+            for (int i = 0; i < count; i++)
+            {
+                int index = str.IndexOf(before, startIndex);
+                if (index == -1)
+                {
+                    break;
+                }
+
+                str = str.Remove(index, before.Length);
+                str = str.Insert(index, after);
+                startIndex = index + after.Length;
+            }
+
+            return str;
+        }
     }
 }
