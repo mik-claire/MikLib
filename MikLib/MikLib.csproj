@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ComparableModel.cs" />
     <Compile Include="Util\ArgumentMap.cs" />
     <Compile Include="MikLib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Debugger.cs" />
     <Compile Include="Util\ExtentionMethod.cs" />
     <Compile Include="Util\FileUtil.cs" />
     <Compile Include="Util\StringUtil.cs" />
