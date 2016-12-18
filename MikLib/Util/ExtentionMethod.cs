@@ -90,6 +90,51 @@ namespace MikLib.Util
         }
 
         /// <summary>
+        /// Copy directory recursively.
+        /// </summary>
+        /// <param name="srcDi">Copy source directoryInfo</param>
+        /// <param name="destDirectoryName">New directory name that copy destination</param>
+        /// <param name="overwrite">Overwrite files when this argument is true</param>
+        /// <returns>DirectoryInfo of copy destination directory</returns>
+        public static DirectoryInfo CopyNewestTo(this DirectoryInfo srcDi, string destDirectoryName)
+        {
+            DirectoryInfo destDi = new DirectoryInfo(destDirectoryName);
+
+            // Create destination directory if destination directory was not existed.
+            if (!destDi.Exists)
+            {
+                destDi.Create();
+                destDi.Attributes = srcDi.Attributes;
+            }
+
+            // Copy files
+            foreach (FileInfo fi in srcDi.GetFiles())
+            {
+                // Overwrite files if source file is newly than destination file.
+                FileInfo destFi = new FileInfo(Path.Combine(destDi.FullName, fi.Name));
+                if (destFi.Exists)
+                {
+                    continue;
+                }
+
+                if (fi.LastWriteTime <= destFi.LastWriteTime)
+                {
+                    continue;
+                }
+
+                fi.CopyTo(destFi.FullName, true);
+            }
+
+            // Copy directories recursively
+            foreach (DirectoryInfo di in srcDi.GetDirectories())
+            {
+                CopyTo(di, Path.Combine(destDi.FullName, di.Name));
+            }
+
+            return destDi;
+        }
+
+        /// <summary>
         /// Delete files and directories in specified directory.
         /// </summary>
         /// <param name="root"></param>

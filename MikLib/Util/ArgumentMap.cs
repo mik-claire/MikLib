@@ -32,6 +32,10 @@ namespace MikLib.Util
                             i++;
                         }
                     }
+                    else
+                    {
+                        this.optionSwitches.Add(args[i]);
+                    }
                 }
                 else
                 {
