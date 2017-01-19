@@ -76,5 +76,27 @@ namespace MikLib.Util
             string dst = shiftJis.GetString(dstBytes);
             return dst;
         }
+
+		public static string AdjustLength(object item, int length, char paddingChar = ' ', bool right = false)
+		{
+			if (item == null)
+			{
+				return string.Empty.PadLeft(length, paddingChar);
+			}
+
+			string result = item.ToString();
+
+			if (length < result.Length)
+			{
+				return result.Substring(0, length);
+			}
+
+			if (right)
+			{
+				return result.PadRight(length, paddingChar);
+			}
+
+			return result.PadLeft(length, paddingChar);
+		}
     }
 }
